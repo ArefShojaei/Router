@@ -9,5 +9,10 @@ export default class Router {
     }
 
 
+    static setRouteToURL(route) {
+        history.pushState({}, "", route)
+    }
+
+
     static init() {}
 }
