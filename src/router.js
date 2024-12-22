@@ -1,3 +1,6 @@
+import Page from "./page.js"
+
+
 export default class Router {
     static routes = {};
     static currentRoute = "";
@@ -11,6 +14,16 @@ export default class Router {
 
     static setRouteToURL(route) {
         history.pushState({}, "", route)
+    }
+
+    static injectTemplateToDOM(route) {
+        const { title, view } = this.routes[route] ?? this.tmpRoute
+
+        const renderedTemplate = view()
+
+        Page.setPageTitle(title)
+        
+        document.querySelector("#root").innerHTML = renderedTemplate
     }
 
 
