@@ -22,4 +22,8 @@ export default class Route extends Router {
 
         return this;
     }
+
+    static title(value) {
+        this.routes[this.currentRoute]["title"] = value
+    }
 }
