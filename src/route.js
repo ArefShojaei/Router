@@ -12,4 +12,14 @@ export default class Route extends Router {
 
         return this;
     }
+
+    static group(prefix, callback) {
+        this.routePrefix = prefix;
+
+        callback();
+
+        this.routePrefix = ""
+
+        return this;
+    }
 }
