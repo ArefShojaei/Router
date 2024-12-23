@@ -1,7 +1,7 @@
 import Page from "./page.js"
 import View from "./view.js";
-import Selector from "./selector.js";
-import Element from "./element.js";
+import Selector from "./utils/selector.js";
+import Element from "./utils/element.js";
 
 
 /**
