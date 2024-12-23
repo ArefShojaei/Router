@@ -44,7 +44,7 @@ export default class Route extends Router {
     }
 
     static title(value) {
-        this.routes[this.currentRoute]["title"] = value
+        this.routes[this.routePrefix + this.currentRoute]["title"] = value
     }
 
     static redirect(to) {
