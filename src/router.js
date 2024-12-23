@@ -26,6 +26,14 @@ export default class Router {
         document.querySelector("#root").innerHTML = renderedTemplate
     }
 
+    static activeHistroyNavigation() {
+        window.addEventListener("popstate", e => {
+            const route = e.target.location.pathname
+
+            this.injectRouteTemplateToDOM(route)
+        })
+    }
+
 
     static init() {}
 }
