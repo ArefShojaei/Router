@@ -23,6 +23,26 @@ export default class Route extends Router {
         return this;
     }
 
+    static middleware(middlewares) {
+        const isDefinedRoutePrefix = this.routePrefix ? true : false
+
+        // Add middlewares to single route
+        if (!isDefinedRoutePrefix) {
+            this.routes[this.routePrefix + this.currentRoute][
+                "middlewares"
+            ].push(...middlewares);
+
+            return;
+        }
+
+        // Add middlewares to the group of routes
+        for (const route in this.routes) {
+            if (!route.startsWith(this.routePrefix)) continue;
+
+            this.routes[route]["middlewares"].push(...middlewares);
+        }
+    }
+
     static title(value) {
         this.routes[this.currentRoute]["title"] = value
     }
