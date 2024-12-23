@@ -17,11 +17,13 @@ export default class Router {
     }
 
     static injectTemplateToDOM(route) {
-        const { title, view } = this.routes[route] ?? this.tmpRoute
+        const { title, view, middlewares } = this.routes[route] ?? this.tmpRoute
 
         const renderedTemplate = view()
 
-        Page.setPageTitle(title)
+        Page.setTitle(title)
+        
+        this.applyMiddlewares(middlewares)
         
         document.querySelector("#root").innerHTML = renderedTemplate
     }
@@ -30,14 +32,14 @@ export default class Router {
         window.addEventListener("popstate", e => {
             const route = e.target.location.pathname
 
-            this.injectRouteTemplateToDOM(route)
+            this.injectTemplateToDOM(route)
         })
     }
 
     static changeRoutebyRequest() {
         const { pathname } = location
 
-        this.injectRouteTemplateToDOM(pathname)
+        this.injectTemplateToDOM(pathname)
     }
 
     static changeRoutebyLink() {
@@ -49,14 +51,12 @@ export default class Router {
 
                 this.setRouteToURL(link)
 
-                this.injectRouteTemplateToDOM(link)
+                this.injectTemplateToDOM(link)
             })
         })
     }
 
-    static applyMiddlewares(route) {
-        const { middlewares } = this.routes[route] ?? this.tmpRoute
-
+    static applyMiddlewares(middlewares) {
         if (middlewares.length) middlewares.forEach(middleware => middleware())
     }
 
