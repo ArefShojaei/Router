@@ -1,3 +1,6 @@
+/**
+ * @abstract
+ */
 export default class Page {
     /**
      * Default page title
@@ -9,6 +12,10 @@ export default class Page {
      */
     static #origin = ""
 
+
+    constructor() {
+        throw new Error(`${new.target.name} class must not be called with \"new\" keyword!`)
+    }
 
     /**
      * @param {string} value

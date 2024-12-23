@@ -2,7 +2,14 @@ import Router from "./router.js"
 import View from "./view.js";
 
 
+/**
+ * @abstract
+ */
 export default class Route extends Router {
+    constructor() {
+        throw new Error(`${new.target.name} class must not be called with \"new\" keyword!`)
+    }
+
     /**
      * @param {string} route 
      * @param {fucntion} callback 

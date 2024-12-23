@@ -2,6 +2,9 @@ import Page from "./page.js"
 import View from "./view.js";
 
 
+/**
+ * @abstract
+ */
 export default class Router {
     static _routes = {};
     
@@ -15,6 +18,10 @@ export default class Router {
         view : () => "404 | Page not found!"
     }
 
+
+    constructor() {
+        throw new Error(`${new.target.name} class must not be called with \"new\" keyword!`)
+    }
     
     /**
      * 
