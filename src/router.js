@@ -47,17 +47,17 @@ export default class Router {
             el.addEventListener("click", e => {
                 e.preventDefault()
 
-                const link = e.target.getAttribute("href")
+                const route = e.target.getAttribute("href")
 
-                this.setRouteToURL(link)
+                this.setRouteToURL(route)
 
-                this.injectTemplateToDOM(link)
+                this.injectTemplateToDOM(route)
             })
         })
     }
 
     static applyMiddlewares(middlewares) {
-        if (middlewares.length) middlewares.forEach(middleware => middleware())
+        middlewares.length && middlewares.forEach(middleware => middleware())
     }
 
     static run() {
