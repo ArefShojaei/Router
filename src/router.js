@@ -1,5 +1,7 @@
 import Page from "./page.js"
 import View from "./view.js";
+import Selector from "./selector.js";
+import Element from "./element.js";
 
 
 /**
@@ -71,11 +73,11 @@ export default class Router {
      * @returns {void}
      */
     static #changeRoutebyLink() {
-        document.querySelectorAll("a").forEach(el => {
-            el.addEventListener("click", e => {
-                e.preventDefault()
+        Selector.findAll("a").each(anchor => {
+            Element.onClick(anchor, (event) => {
+                event.preventDefault()
 
-                const route = e.target.getAttribute("href")
+                const route = event.target.getAttribute("href")
 
                 this._setRouteToURL(route)
 
