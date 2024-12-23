@@ -61,6 +61,8 @@ export default class Router {
     }
 
     static run() {
+        Page.setRootTitle()
+
         this.activeHistroyNavigation()
 
         this.changeRoutebyRequest()

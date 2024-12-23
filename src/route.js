@@ -6,6 +6,7 @@ export default class Route extends Router {
         this.routes[this.routePrefix + route] = {
             view: callback,
             middlewares: [],
+            title : ""
         };
 
         this.currentRoute = route;
