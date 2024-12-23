@@ -34,6 +34,11 @@ export default class Router {
         })
     }
 
+    static changeRoutebyRequest() {
+        const { pathname } = location
+
+        this.injectRouteTemplateToDOM(pathname)
+    }
 
     static init() {}
 }
