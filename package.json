@@ -1,0 +1,30 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "vanilla-js router",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "tests",
+    "src": "src"
+  },
+  "scripts": {
+    "test": "nodemon example/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArefShojaei/Router.git"
+  },
+  "keywords": [
+    "router",
+    "routing",
+    "route",
+    "spa"
+  ],
+  "author": "Aref Shojaei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArefShojaei/Router/issues"
+  },
+  "homepage": "https://github.com/ArefShojaei/Router#readme"
+}
