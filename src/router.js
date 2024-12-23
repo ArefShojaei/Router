@@ -54,5 +54,11 @@ export default class Router {
         })
     }
 
-    static init() {}
+    static run() {
+        this.activeHistroyNavigation()
+
+        this.changeRoutebyRequest()
+
+        this.changeRoutebyLink()
+    }
 }
