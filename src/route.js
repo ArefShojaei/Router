@@ -26,4 +26,14 @@ export default class Route extends Router {
     static title(value) {
         this.routes[this.currentRoute]["title"] = value
     }
+
+    static redirect(to) {
+        this.setRouteToURL(to)
+
+        const { view } = this.routes[to];
+
+        const renderedTemplate = view()
+
+        return renderedTemplate
+    }
 }
