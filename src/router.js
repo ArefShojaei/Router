@@ -40,5 +40,19 @@ export default class Router {
         this.injectRouteTemplateToDOM(pathname)
     }
 
+    static changeRoutebyLink() {
+        document.querySelectorAll("a").forEach(el => {
+            el.addEventListener("click", e => {
+                e.preventDefault()
+
+                const link = e.target.getAttribute("href")
+
+                this.setRouteToURL(link)
+
+                this.injectRouteTemplateToDOM(link)
+            })
+        })
+    }
+
     static init() {}
 }
