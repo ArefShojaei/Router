@@ -54,6 +54,12 @@ export default class Router {
         })
     }
 
+    static applyMiddlewares(route) {
+        const { middlewares } = this.routes[route] ?? this.tmpRoute
+
+        if (middlewares.length) middlewares.forEach(middleware => middleware())
+    }
+
     static run() {
         this.activeHistroyNavigation()
 
