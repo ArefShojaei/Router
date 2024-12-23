@@ -1,15 +1,19 @@
 {
-  "name": "router",
+  "name": "@aref-shojaei/router",
   "version": "1.0.0",
-  "description": "vanilla-js router",
+  "description": "JavaScript Router (SPA)",
   "main": "index.js",
   "directories": {
-    "example": "example",
     "test": "tests",
     "src": "src"
   },
   "scripts": {
-    "test": "nodemon example/server.js"
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   },
   "repository": {
     "type": "git",
@@ -22,9 +26,15 @@
     "spa"
   ],
   "author": "Aref Shojaei",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ArefShojaei/Router/issues"
   },
-  "homepage": "https://github.com/ArefShojaei/Router#readme"
+  "homepage": "https://github.com/ArefShojaei/Router#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  }
 }
