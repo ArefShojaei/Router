@@ -3,33 +3,33 @@ import Router from "./router.js"
 
 export default class Route extends Router {    
     static addRoute(route, callback) {
-        this.routes[this.routePrefix + route] = {
+        this._routes[this._routePrefix + route] = {
             view: callback,
             middlewares: [],
             title : ""
         };
 
-        this.currentRoute = route;
+        this._currentRoute = route;
 
         return this;
     }
 
     static group(prefix, callback) {
-        this.routePrefix = prefix;
+        this._routePrefix = prefix;
 
         callback();
 
-        this.routePrefix = ""
+        this._routePrefix = ""
 
         return this;
     }
 
     static middleware(middlewares) {
-        const isDefinedRoutePrefix = this.routePrefix ? true : false
+        const isDefinedRoutePrefix = this._routePrefix ? true : false
 
         // Add middlewares to single route
         if (!isDefinedRoutePrefix) {
-            this.routes[this.routePrefix + this.currentRoute][
+            this._routes[this._routePrefix + this._currentRoute][
                 "middlewares"
             ].push(...middlewares);
 
@@ -37,21 +37,21 @@ export default class Route extends Router {
         }
 
         // Add middlewares to the group of routes
-        for (const route in this.routes) {
-            if (!route.startsWith(this.routePrefix)) continue;
+        for (const route in this._routes) {
+            if (!route.startsWith(this._routePrefix)) continue;
 
-            this.routes[route]["middlewares"].push(...middlewares);
+            this._routes[route]["middlewares"].push(...middlewares);
         }
     }
 
     static title(value) {
-        this.routes[this.routePrefix + this.currentRoute]["title"] = value
+        this._routes[this._routePrefix + this._currentRoute]["title"] = value
     }
 
     static redirect(to) {
-        this.setRouteToURL(to)
+        this._setRouteToURL(to)
 
-        const { view } = this.routes[to];
+        const { view } = this._routes[to];
 
         const renderedTemplate = view()
 
