@@ -1,4 +1,5 @@
 import Router from "./router.js"
+import View from "./view.js";
 
 
 export default class Route extends Router {    
@@ -53,8 +54,6 @@ export default class Route extends Router {
 
         const { view } = this._routes[to];
 
-        const renderedTemplate = view()
-
-        return renderedTemplate
+        return View.render(view)
     }
 }

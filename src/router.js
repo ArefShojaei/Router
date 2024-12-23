@@ -1,4 +1,5 @@
 import Page from "./page.js"
+import View from "./view.js";
 
 
 export default class Router {
@@ -19,13 +20,11 @@ export default class Router {
     static #injectTemplateToDOM(route) {
         const { title, view, middlewares } = this._routes[route] ?? this._tmpRoute
 
-        const renderedTemplate = view()
-
         Page.setTitle(title)
         
         this.#applyMiddlewares(middlewares)
         
-        document.querySelector("#root").innerHTML = renderedTemplate
+        document.querySelector("#root").innerHTML = View.render(view)
     }
 
     static #activeHistroyNavigation() {
