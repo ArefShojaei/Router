@@ -2,7 +2,12 @@ import Router from "./router.js"
 import View from "./view.js";
 
 
-export default class Route extends Router {    
+export default class Route extends Router {
+    /**
+     * @param {string} route 
+     * @param {fucntion} callback 
+     * @returns {Route}
+     */   
     static addRoute(route, callback) {
         this._routes[this._routePrefix + route] = {
             view: callback,
@@ -15,6 +20,11 @@ export default class Route extends Router {
         return this;
     }
 
+    /**
+     * @param {string} prefix 
+     * @param {function} callback 
+     * @returns {Route}
+     */
     static group(prefix, callback) {
         this._routePrefix = prefix;
 
@@ -25,6 +35,10 @@ export default class Route extends Router {
         return this;
     }
 
+    /**
+     * @param {array} middlewares
+     * @returns {void}
+     */
     static middleware(middlewares) {
         const isDefinedRoutePrefix = this._routePrefix ? true : false
 
@@ -45,10 +59,19 @@ export default class Route extends Router {
         }
     }
 
+    /**
+     * Set route page title
+     * @param {string} value
+     * @returns {void}
+     */
     static title(value) {
         this._routes[this._routePrefix + this._currentRoute]["title"] = value
     }
 
+    /**
+     * @param {string} to - Route pointer  
+     * @returns {string}
+     */
     static redirect(to) {
         this._setRouteToURL(to)
 

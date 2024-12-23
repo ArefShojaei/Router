@@ -4,19 +4,32 @@ import View from "./view.js";
 
 export default class Router {
     static _routes = {};
+    
     static _currentRoute = "";
+    
     static _routePrefix = "";
+    
     static _tmpRoute = {
         title : "404",
         middlewares : [],
         view : () => "404 | Page not found!"
     }
 
-
+    
+    /**
+     * 
+     * @param {string} route
+     * @returns {void} 
+     */
     static _setRouteToURL(route) {
         history.pushState({}, "", route)
     }
 
+    /**
+     * 
+     * @param {string} route
+     * @returns {void} 
+     */
     static #injectTemplateToDOM(route) {
         const { title, view, middlewares } = this._routes[route] ?? this._tmpRoute
 
@@ -27,6 +40,9 @@ export default class Router {
         document.querySelector("#root").innerHTML = View.render(view)
     }
 
+    /**
+     * @returns {void}
+     */
     static #activeHistroyNavigation() {
         window.addEventListener("popstate", e => {
             const route = e.target.location.pathname
@@ -35,12 +51,18 @@ export default class Router {
         })
     }
 
+    /**
+     * @returns {void}
+     */    
     static #changeRoutebyRequest() {
         const { pathname } = location
 
         this.#injectTemplateToDOM(pathname)
     }
 
+    /**
+     * @returns {void}
+     */
     static #changeRoutebyLink() {
         document.querySelectorAll("a").forEach(el => {
             el.addEventListener("click", e => {
@@ -55,10 +77,17 @@ export default class Router {
         })
     }
 
+    /**
+     * @param {array} middlewares
+     * @returns {void}
+     */
     static #applyMiddlewares(middlewares) {
         middlewares.length && middlewares.forEach(middleware => middleware())
     }
 
+    /**
+     * @returns {void}
+     */
     static run() {
         Page.setRootTitle(document.title)
 
