@@ -61,7 +61,7 @@ export default class Router {
     }
 
     static run() {
-        Page.setRootTitle()
+        Page.setRootTitle(document.title)
 
         this.activeHistroyNavigation()
 
