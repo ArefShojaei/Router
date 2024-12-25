@@ -2,13 +2,12 @@ import View from "../../src/view.js"
 
 
 describe("View tests", () => {
-    it("should protect to create instance of class", () => {
+    it("should prevent instantiation of the class", () => {
         expect(() => new View).toThrow()
     })
 
-
-    it("should render view (template) without view param", () => {
-        const page = () => {
+    it("should render a template without params", () => {
+        const template = () => {
             return `
                 <div>
                     <h1>Welcome Page</h1>
@@ -17,13 +16,15 @@ describe("View tests", () => {
             `
         } 
 
-        const renderedTemplate = View.render(page)
+        const renderedTemplate = View.render(template)
 
         expect(typeof renderedTemplate).toBe("string")
+        expect(renderedTemplate).toContain("<h1>Welcome Page</h1>")
+        expect(renderedTemplate).toContain("<p>This is SPA page!</p>")
     })
 
-    it("should render view (template) with view param", () => {
-        const page = ({ id, name }) => {
+    it("should render a template with params", () => {
+        const template = ({ id, name }) => {
             return `
                 <div>
                     <h1>User Page</h1>
@@ -37,9 +38,10 @@ describe("View tests", () => {
             name : "Robert"
         }
 
-        const renderedTemplate = View.render(page, user)
+        const renderedTemplate = View.render(template, user)
 
         expect(typeof renderedTemplate).toBe("string")
-        expect(renderedTemplate).toMatch(`<p>ID: ${user.id}  -  Name: ${user.name}</p>`)
+        expect(renderedTemplate).toContain(`<h1>User Page</h1>`)
+        expect(renderedTemplate).toContain(`<p>ID: ${user.id}  -  Name: ${user.name}</p>`)
     })
 })

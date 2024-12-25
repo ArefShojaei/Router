@@ -3,13 +3,10 @@ import Element from "../../src/utils/element"
 
 
 describe("Element tests", () => {
-    it("should protect to create instance of class", () => {
-        expect(() => new Element).toThrow()
-    })
+    let DOM
 
-
-    it("should fire click event", () => {
-        const dom = new JSDOM(`
+    beforeEach(() => {
+        const { window : { document } } = new JSDOM(`
             <html>
                 <head></head>
                 <body>
@@ -17,11 +14,21 @@ describe("Element tests", () => {
                 </body>
             </html>
         `)
-        
-        const anchorElement = dom.window.document.querySelector("a")
 
-        Element.onClick(anchorElement , (event) => {
+        DOM = document
+    })
+
+
+    it("should prevent instantiation of the class", () => {
+        expect(() => new Element).toThrow()
+    })
+
+    it("should fire click event", () => {
+        const links = DOM.querySelector("a")
+
+        Element.onClick(links , (event) => {
+            
             expect(typeof event).toBe("object")
-        })
+        }, { HTMLElement })
     })
 })

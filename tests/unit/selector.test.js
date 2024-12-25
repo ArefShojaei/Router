@@ -3,12 +3,10 @@ import Selector from "../../src/utils/selector.js";
 
 
 describe("Selector tests", () => {
-    it("should protect to create instance of class", () => {
-        expect(() => new Selector).toThrow();
-    });
+    let document
 
-    it("should get all anchor elements", () => {
-        const dom = new JSDOM(`
+    beforeEach(() => {
+        const { window : { document } } = new JSDOM(`
             <html>
                 <head></head>
                 <body>
@@ -17,31 +15,25 @@ describe("Selector tests", () => {
                     <a href='/blog'>Blog page</a>
                 </body>
             </html>
-        `);
+        `)
 
-        const anchorElement = "a";
+        document = document
+    })
 
-        const links = Selector.findAll(anchorElement, dom.window.document).getElements();
+
+    it("should prevent instantiation of the class", () => {
+        expect(() => new Selector).toThrow();
+    });
+
+    it("should get all anchor elements", () => {
+        const links = Selector.findAll("a", document).getElements();
 
 
         expect(typeof links).toBe("object")
     });
 
     it("should get title of link", () => {
-        const dom = new JSDOM(`
-            <html>
-                <head></head>
-                <body>
-                    <a href='/'>Home page</a>
-                    <a href='/products'>Products page</a>
-                    <a href='/blog'>Blog page</a>
-                </body>
-            </html>
-        `);
-
-        const anchorElement = "a";
-
-        Selector.findAll(anchorElement, dom.window.document).each(anchor => {
+        Selector.findAll("a", document).each(anchor => {
             const link = anchor.getAttribute("href")
 
             expect(typeof link).toBe("string")

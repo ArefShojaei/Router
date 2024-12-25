@@ -3,55 +3,37 @@ import Page from "../../src/page.js"
 
 
 describe("Page tests", () => {
-    it("should protect to create instance of class", () => {
+    let document
+
+    beforeEach(() => {
+        const { window : { document } } = new JSDOM(`
+            <html>
+                <head>
+                    <title>SPA Page</title>
+                </head>
+                <body>
+                    <a href='/'>Home page</a>
+                </body>
+            </html>
+        `)
+    
+        document = document
+
+        Page.setRootTitle(document.title)
+    })
+
+
+    it("should prevent instantiation of the class", () => {
         expect(() => new Page).toThrow()
     })
 
     it("should set root page title", () => {
-        const dom = new JSDOM(`
-            <html>
-                <head>
-                    <title>SPA Page</title>
-                </head>
-                <body>
-                    <a href='/'>Home page</a>
-                </body>
-            </html>
-        `)
-        
-        const document = dom.window.document
-
-        Page.setDocument(document)
-
-        Page.setRootTitle(document.title)
-
-        const isSetRootPageTitle = Page.getRootTitle() ? true : false
-
-        expect(isSetRootPageTitle).toBeTruthy()
+        expect(Page.getRootTitle()).toBeTruthy()
     })
 
     it("should set custom page title", () => {
-        const dom = new JSDOM(`
-            <html>
-                <head>
-                    <title>SPA Page</title>
-                </head>
-                <body>
-                    <a href='/'>Home page</a>
-                </body>
-            </html>
-        `)
-        
-        const document = dom.window.document
-
-        Page.setDocument(document)
-
-        Page.setRootTitle(document.title)
-
         Page.setTitle("Custom Page Title!")
 
-        const isSetPageTitle = Page.getTitle() ? true : false
-
-        expect(isSetPageTitle).toBeTruthy()
+        expect(Page.getTitle()).toBeTruthy()
     })
 })
