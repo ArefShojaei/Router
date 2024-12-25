@@ -113,7 +113,7 @@ export default class Router {
      * @param {Document} document
      * @returns {void}
      */
-    static run(callback, document = document) {
+    static run(callback = () => {}, document = document) {
         if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
         
         if (!(typeof callback instanceof Document)) throw new Error("Invalid 'document' provided. It must be an Document object!")
