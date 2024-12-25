@@ -16,8 +16,13 @@ export default class Route extends Router {
      * @returns {Route}
      */   
     static addRoute(route, callback) {
+        if (typeof route !== "string") throw new Error("Invalid 'route' provided. It must be a string!")
+        
+        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+
+
         this._routes[this._routePrefix + route] = {
-            view: callback,
+            template: callback,
             middlewares: [],
             title : ""
         };
@@ -33,11 +38,17 @@ export default class Route extends Router {
      * @returns {Route}
      */
     static group(prefix, callback) {
+        if (typeof prefix !== "string" || !prefix.startsWith("/")) throw new Error("Invalid 'prefix' provided. It must be a string!")
+        
+        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+
+        const previousPrefix = this._routePrefix 
+
         this._routePrefix = prefix;
 
         callback();
 
-        this._routePrefix = ""
+        this._routePrefix = previousPrefix
 
         return this;
     }
@@ -47,6 +58,8 @@ export default class Route extends Router {
      * @returns {void}
      */
     static middleware(middlewares) {
+        if (!Array.isArray(middlewares)) throw new Error("Invalid 'middlewares' provided. It must be an array!")
+
         const isDefinedRoutePrefix = this._routePrefix ? true : false
 
         // Add middlewares to single route
@@ -72,6 +85,8 @@ export default class Route extends Router {
      * @returns {void}
      */
     static title(value) {
+        if (typeof value !== "string") throw new Error("Invalid 'value' provided. It must be a string!")
+
         this._routes[this._routePrefix + this._currentRoute]["title"] = value
     }
 
@@ -79,8 +94,12 @@ export default class Route extends Router {
      * @param {string} to - Route pointer  
      * @returns {string}
      */
-    static redirect(to) {
-        this._setRouteToURL(to)
+    static redirect(to, window = window) {
+        if (typeof to !== "string" || !to.startsWith("/")) throw new Error("Invalid 'to' provided. It must be a string starting route with \"/\"!")
+
+        if (!(window instanceof Window)) throw new Error("Invalid 'window' provided. It must be a Window object!")
+
+        this._setRouteToURL(to, window)
 
         const { view } = this._routes[to];
 

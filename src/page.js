@@ -8,9 +8,12 @@ export default class Page {
     static #root = ""
     
     /**
-     * Origin page title
+     * Updated page title
      */
-    static #origin = ""
+    static #title = ""
+    
+
+    static #document
 
 
     constructor() {
@@ -18,13 +21,31 @@ export default class Page {
     }
 
     /**
+     * @param {Document} document 
+     */
+    static setDocument(document) {
+        if (!(typeof document instanceof Document)) throw new Error("Invalid 'document' provided. It must be a Document object!")
+
+        this.#document = document
+    }
+    
+    /**
+     * @returns {Document} 
+     */
+    static _getDocument() {
+        return this.#document
+    }
+
+    /**
      * @param {string} value
      * @returns {void}
      */
     static setTitle(value) {
-        this.#origin = value
+        if (typeof value !== "string") throw new Error("Invalid 'title' provided. It must be a string!")
 
-        this.#applyTitle()
+        this.#title = value
+
+        this.#updateTitle()
     }
 
     /**
@@ -32,9 +53,11 @@ export default class Page {
      * @returns {void}
      */
     static setRootTitle(value) {
+        if (typeof value !== "string") throw new Error("Invalid 'value' provided. It must be a string!")
+
         this.#root = value
 
-        this.#applyTitle()
+        this.#updateTitle()
     }
 
     /**
@@ -42,7 +65,7 @@ export default class Page {
      * @returns {void}
      */
     static getTitle() {
-        return this.#origin
+        return this.#title || this.#root
     }
 
     /**
@@ -55,7 +78,9 @@ export default class Page {
     /**
      * @returns {void}
      */
-    static #applyTitle() {
+    static #updateTitle() {
+        const document = this._getDocument()
+
         !this.getTitle() ? (document.title = this.getRootTitle()) : (document.title = this.getTitle()) 
     }
 }

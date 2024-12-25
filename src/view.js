@@ -7,11 +7,17 @@ export default class View {
     }
 
     /**
-     * @param {string} view 
+     * @param {string} template 
      * @param {object} data 
      * @returns {string}
      */
-    static render(view, data = {}) {
-        return view(data)
+    static render(template, data = {}) {
+        if (typeof template !== "string") throw new Error("Invalid 'template' provided. It must be a string!")
+
+        try {
+            return template(data)
+        } catch (error) {
+            console.error("Error during template rendering: ", error);            
+        }
     }
 }

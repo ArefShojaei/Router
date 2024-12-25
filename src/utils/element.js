@@ -7,11 +7,15 @@ export default class Element {
     }
 
     /**
-     * 
      * @param {HTMLElement} element 
      * @param {function} callback 
      */
     static onClick(element, callback) {
+        if (!(typeof element instanceof HTMLElement)) throw new Error("Invalid 'element' provided. It must be an HTMLElement!")
+
+        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+
+        
         element.addEventListener("click", callback)
     }
 }
