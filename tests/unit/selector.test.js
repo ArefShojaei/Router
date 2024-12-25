@@ -1,7 +1,8 @@
 import { JSDOM } from "jsdom";
 import Selector from "../../src/utils/selector.js";
 
-describe("Element tests", () => {
+
+describe("Selector tests", () => {
     it("should protect to create instance of class", () => {
         expect(() => new Selector).toThrow();
     });
