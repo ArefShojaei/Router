@@ -1,4 +1,4 @@
-![spa](https://github.com/user-attachments/assets/a7248971-3bcd-4754-9f18-a227570b1013)
+![SPA (1)](https://github.com/user-attachments/assets/7e76a68b-84f0-4fa7-b961-26319d3ed3bc)
 
 
 <h1 align='center'>Router - SPA Application</h1>
