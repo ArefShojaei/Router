@@ -7,6 +7,11 @@
 ```js
 import { Router, Route } from "@aref-shojaei/router"
 
+
+// Confgiure router system
+Router.configure({ window, document })
+
+
 // Single Route
 Route.addRoute("/", () => "Welcome Page")
 
@@ -16,10 +21,15 @@ Route.group("/auth", () => {
     Route.addRoute("/register", () => "Register Page")
 })
 
+// Dynamic Route
+Route.addRoute("/users/{id}", ({ params : { name } }) => `User#${id} Page`)
+
+
 // Redirect Routes
 Route.addRoute("/redirection", () => Route.redirect("/"))
 
 
+// Initialize the router
 Router.run()
 ```
 
@@ -99,6 +109,7 @@ Router.run()
 > Route
 * Single type
 * Group type
+* Dynamic type
 
 ```js
 import { Route } from "@aref-shojaei/router"
@@ -111,6 +122,11 @@ Route.group("/auth", () => {
     Route.addRoute("/login", () => "Welcome Page")
     Route.addRoute("/register", () => "Welcome Page")
 })
+
+// Dynamic route with params
+Route.addRoute("/users/{id}", ({ params : { id } }) => `User #{id} Page`)
+
+Route.addRoute("/courses/{category}/{name}", ({ params : { category, name } }) => `Course Detail: '${category}/${name}'  Page`)
 ```
 
 <br/>
