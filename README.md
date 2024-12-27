@@ -4,6 +4,7 @@
 <h1 align='center'>Router - SPA Application</h1>
 
 
+> app.js
 ```js
 import { Router, Route } from "@aref-shojaei/router"
 
@@ -32,6 +33,29 @@ Route.addRoute("/redirection", () => Route.redirect("/"))
 // Initialize the router
 Router.run()
 ```
+
+> index.html
+```html
+<html>
+    <head>
+        <title>SPA App</title>
+    </head>
+    <body>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/auth/login">Login</a></li>
+            <li><a href="/auth/register">Register</a></li>
+            <li><a href="/users/2904152">Admin Page</a></li>
+            <li><a href="/redirection">Redirect to a page</a></li>
+        </ul>
+
+        <div id="root"></div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
+```
+
 
 ##  Guide :
 1. [Introduction](#introduction)
