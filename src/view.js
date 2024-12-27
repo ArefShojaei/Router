@@ -1,3 +1,5 @@
+import { InvalidArgumentTypeError } from "./exception.js"
+
 /**
  * @abstract
  */
@@ -7,12 +9,12 @@ export default class View {
     }
 
     /**
-     * @param {string} template 
+     * @param {function} template 
      * @param {object} data 
      * @returns {string}
      */
     static render(template, data = {}) {
-        if (typeof template !== "string") throw new Error("Invalid 'template' provided. It must be a string!")
+        if (typeof template !== "function") throw new InvalidArgumentTypeError("'template' must be a function!")
 
         try {
             return template(data)

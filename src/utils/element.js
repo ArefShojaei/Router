@@ -1,3 +1,5 @@
+import { InvalidArgumentTypeError } from "../exception.js"
+
 /**
  * @abstract
  */
@@ -11,9 +13,9 @@ export default class Element {
      * @param {function} callback 
      */
     static onClick(element, callback) {
-        if (!(typeof element instanceof HTMLElement)) throw new Error("Invalid 'element' provided. It must be an HTMLElement!")
+        if (!(element instanceof HTMLElement)) throw new InvalidArgumentTypeError("'element' must be an HTMLElement!")
 
-        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+        if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
         
         element.addEventListener("click", callback)

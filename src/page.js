@@ -1,3 +1,5 @@
+import { InvalidArgumentTypeError } from "./exception.js"
+
 /**
  * @abstract
  */
@@ -24,7 +26,7 @@ export default class Page {
      * @param {Document} document 
      */
     static setDocument(document) {
-        if (!(typeof document instanceof Document)) throw new Error("Invalid 'document' provided. It must be a Document object!")
+        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
 
         this.#document = document
     }
@@ -41,7 +43,8 @@ export default class Page {
      * @returns {void}
      */
     static setTitle(value) {
-        if (typeof value !== "string") throw new Error("Invalid 'title' provided. It must be a string!")
+        if (typeof value !== "string") throw new InvalidArgumentTypeError("'title' must be a string!")
+
 
         this.#title = value
 
@@ -53,8 +56,9 @@ export default class Page {
      * @returns {void}
      */
     static setRootTitle(value) {
-        if (typeof value !== "string") throw new Error("Invalid 'value' provided. It must be a string!")
+        if (typeof value !== "string") throw new InvalidArgumentTypeError("'value' must be a string!")
 
+        
         this.#root = value
 
         this.#updateTitle()
@@ -81,6 +85,8 @@ export default class Page {
     static #updateTitle() {
         const document = this._getDocument()
 
-        !this.getTitle() ? (document.title = this.getRootTitle()) : (document.title = this.getTitle()) 
+        !this.getTitle() 
+            ? (document.title = this.getRootTitle()) 
+            : (document.title = this.getTitle()) 
     }
 }

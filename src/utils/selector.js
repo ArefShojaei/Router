@@ -1,3 +1,5 @@
+import { InvalidArgumentTypeError } from "../exception.js"
+
 /**
  * @abstract
  */
@@ -14,10 +16,10 @@ export default class Selector {
      * @param {Document} document 
      * @returns {Selector}
      */
-    static findAll(element, document = document) {
-        if (!(typeof element instanceof HTMLElement)) throw new Error("Invalid 'element' provided. It must be an HTMLElement!")
+    static findAll(element, document) {
+        if (typeof element !== "string") throw new InvalidArgumentTypeError("'element' must be an HTMLElement object!")
 
-        if (!(typeof document instanceof Document)) throw new Error("Invalid 'document' provided. It must be a Document object!")
+        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
 
 
         const elements = document.querySelectorAll(element)
@@ -32,7 +34,9 @@ export default class Selector {
      * @returns {void}
      */
     static each(callback) {
-        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+        if (!this.#elements.length) throw new Error("Can not use it before selecting elements!")
+
+        if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
 
         const elements = this._getElements()

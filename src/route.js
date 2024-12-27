@@ -1,5 +1,6 @@
 import Router from "./router.js"
 import View from "./view.js";
+import { InvalidArgumentTypeError } from "./exception.js"
 
 
 /**
@@ -16,15 +17,19 @@ export default class Route extends Router {
      * @returns {Route}
      */   
     static addRoute(route, callback) {
-        if (typeof route !== "string") throw new Error("Invalid 'route' provided. It must be a string!")
+        if (typeof route !== "string") throw new InvalidArgumentTypeError("'route' must be a string!")
         
-        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+        if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
 
         this._routes[this._routePrefix + route] = {
+            title : "",
             template: callback,
             middlewares: [],
-            title : ""
+            meta : {
+                params: {},
+                query: {},
+            }
         };
 
         this._currentRoute = route;
@@ -38,9 +43,10 @@ export default class Route extends Router {
      * @returns {Route}
      */
     static group(prefix, callback) {
-        if (typeof prefix !== "string" || !prefix.startsWith("/")) throw new Error("Invalid 'prefix' provided. It must be a string!")
+        if (typeof prefix !== "string" || !prefix.startsWith("/")) throw new InvalidArgumentTypeError("'prefix' must be a string!")
         
-        if (typeof callback !== "function") throw new Error("Invalid 'callback' provided. It must be a function!")
+        if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
+
 
         const previousPrefix = this._routePrefix 
 
@@ -58,15 +64,13 @@ export default class Route extends Router {
      * @returns {void}
      */
     static middleware(middlewares) {
-        if (!Array.isArray(middlewares)) throw new Error("Invalid 'middlewares' provided. It must be an array!")
+        if (!Array.isArray(middlewares)) throw new InvalidArgumentTypeError("'middlewares' must be an array!")
 
         const isDefinedRoutePrefix = this._routePrefix ? true : false
 
         // Add middlewares to single route
         if (!isDefinedRoutePrefix) {
-            this._routes[this._routePrefix + this._currentRoute][
-                "middlewares"
-            ].push(...middlewares);
+            this._routes[this._routePrefix + this._currentRoute]["middlewares"].push(...middlewares);
 
             return;
         }
@@ -85,7 +89,7 @@ export default class Route extends Router {
      * @returns {void}
      */
     static title(value) {
-        if (typeof value !== "string") throw new Error("Invalid 'value' provided. It must be a string!")
+        if (typeof value !== "string") throw new InvalidArgumentTypeError("'value' must be a string!")
 
         this._routes[this._routePrefix + this._currentRoute]["title"] = value
     }
@@ -94,15 +98,14 @@ export default class Route extends Router {
      * @param {string} to - Route pointer  
      * @returns {string}
      */
-    static redirect(to, window = window) {
-        if (typeof to !== "string" || !to.startsWith("/")) throw new Error("Invalid 'to' provided. It must be a string starting route with \"/\"!")
+    static redirect(to) {
+        if (typeof to !== "string" || !to.startsWith("/")) throw new InvalidArgumentTypeError("'to' must be a string starting route with \"/\"!")
 
-        if (!(window instanceof Window)) throw new Error("Invalid 'window' provided. It must be a Window object!")
 
-        this._setRouteToURL(to, window)
+        this._setRouteToURL(to)
 
-        const { view } = this._routes[to];
+        const { template, meta } = this._routes[to] ?? this._defaultRoute;
 
-        return View.render(view)
+        return View.render(template, meta)
     }
 }
