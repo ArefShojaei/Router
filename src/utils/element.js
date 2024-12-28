@@ -13,7 +13,7 @@ export default class Element {
      * @param {function} callback 
      */
     static onClick(element, callback) {
-        if (!(element instanceof HTMLElement)) throw new InvalidArgumentTypeError("'element' must be an HTMLElement!")
+        if (typeof element !== "object") throw new InvalidArgumentTypeError("'element' must be an HTMLElement object!")
 
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
