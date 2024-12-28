@@ -75,7 +75,6 @@ export default class Router {
     }
 
     /**
-     * 
      * @param {string} route 
      * @returns {boolean}
      */
@@ -106,7 +105,6 @@ export default class Router {
     }
 
     /**
-     * 
      * @param {string} route
      * @param {Window} window
      * @returns {void} 

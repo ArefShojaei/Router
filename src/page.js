@@ -50,6 +50,14 @@ export default class Page {
 
         this.#updateTitle()
     }
+    
+    /**
+     * @param {string} value 
+     * @returns {void}
+     */
+     static getTitle() {
+        return this.#title || this.#root
+    }
 
     /**
      * @param {string} value 
@@ -62,14 +70,6 @@ export default class Page {
         this.#root = value
 
         this.#updateTitle()
-    }
-
-    /**
-     * @param {string} value 
-     * @returns {void}
-     */
-    static getTitle() {
-        return this.#title || this.#root
     }
 
     /**
