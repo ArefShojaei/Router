@@ -13,7 +13,7 @@ export default class Router {
 
     static _document
 
-    static _rootElement
+    static _rootElement = "#root"
 
     static _routes = {};
     
@@ -44,7 +44,7 @@ export default class Router {
                     
         if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
         
-        if (typeof selector !== "string") throw new InvalidArgumentTypeError("'selector' must be a string!")
+        if (selector && typeof selector !== "string") throw new InvalidArgumentTypeError("'selector' must be a string!")
         
 
         this._window = window
