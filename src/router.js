@@ -13,6 +13,8 @@ export default class Router {
 
     static _document
 
+    static _rootElement
+
     static _routes = {};
     
     static _currentRoute = "";
@@ -37,15 +39,19 @@ export default class Router {
     /**
      * @param {object} params 
      */
-    static configure({ window, document }) {
-        if (!(window instanceof Window)) throw new InvalidArgumentTypeError("'window' must be a Window object")
+    static configure({ window, document, selector }) {
+        if (!(window instanceof Window)) throw new InvalidArgumentTypeError("'window' must be a Window object!")
                     
-        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object")
+        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
+        
+        if (typeof selector !== "string") throw new InvalidArgumentTypeError("'selector' must be a string!")
         
 
         this._window = window
 
         this._document = document
+
+        this._rootElement = selector
     }
 
     /**
@@ -123,7 +129,7 @@ export default class Router {
             
             this.#applyMiddlewares(middlewares)
             
-            this._document.querySelector("#root").innerHTML = View.render(template, meta)
+            this._document.querySelector(this._rootElement).innerHTML = View.render(template, meta)
         } catch (error) {
             console.error("Error to inject route template:", route, error);
         }
