@@ -34,14 +34,12 @@ export default class Selector {
      * @returns {void}
      */
     static each(callback) {
-        if (!this.#elements.length) throw new Error("Can not use it before selecting elements!")
-
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
 
         const elements = this._getElements()
 
-        elements.forEach(callback)
+        if (this.#elements.length) elements.forEach(callback)
     }
 
     /**

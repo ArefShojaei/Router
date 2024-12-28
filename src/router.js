@@ -46,12 +46,12 @@ export default class Router {
         
         if (selector && typeof selector !== "string") throw new InvalidArgumentTypeError("'selector' must be a string!")
         
+        if (selector) this._rootElement = selector
+        
 
         this._window = window
 
         this._document = document
-
-        this._rootElement = selector
     }
 
     /**
