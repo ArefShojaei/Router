@@ -2,7 +2,8 @@ import Page from "./page.js"
 import View from "./view.js";
 import Selector from "./utils/selector.js";
 import Element from "./utils/element.js";
-import { InvalidArgumentTypeError } from "./exception.js"
+import { InvalidArgumentTypeError } from "./exception.js";
+import RouteDTO from "./dto/route.js"
 
 
 /**
@@ -21,15 +22,12 @@ export default class Router {
     
     static _routePrefix = "";
     
-    static _defaultRoute = {
+    static _defaultRoute = new RouteDTO({
         title : "404",
-        template : () => "404 | Page not found!",
-        middlewares : [],
-        meta : {
-            params : {},
-            query : {}
-        }
-    }
+        template : () => "404 | Page not found!"
+    })
+
+
 
 
     constructor() {
@@ -40,11 +38,12 @@ export default class Router {
      * @param {object} params 
      */
     static configure({ window, document, selector }) {
-        if (!(window instanceof Window)) throw new InvalidArgumentTypeError("'window' must be a Window object!")
+        if (typeof window !== "object") throw new InvalidArgumentTypeError("'window' must be a Window object!")
                     
-        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
+        if (typeof document !== "object") throw new InvalidArgumentTypeError("'document' must be a Document object!")
         
         if (selector && typeof selector !== "string") throw new InvalidArgumentTypeError("'selector' must be a string!")
+        
         
         if (selector) this._rootElement = selector
         
@@ -148,7 +147,7 @@ export default class Router {
      * @returns {void}
      */    
     static #changeRoutebyRequest() {
-        const { pathname } = location
+        const { pathname } = this._window.location
 
         this.#injectTemplateToDOM(pathname)
     }
@@ -192,9 +191,9 @@ export default class Router {
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
         
 
-        Page.setDocument(document)
+        Page.setDocument(this._document)
         
-        Page.setRootTitle(document.title)
+        Page.setRootTitle(this._document.title)
 
         this.#activeHistroyNavigation()
 

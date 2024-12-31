@@ -26,7 +26,7 @@ export default class Page {
      * @param {Document} document 
      */
     static setDocument(document) {
-        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
+        if (typeof document !== "object") throw new InvalidArgumentTypeError("'document' must be a Document object!")
 
         this.#document = document
     }

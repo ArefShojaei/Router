@@ -19,7 +19,7 @@ export default class Selector {
     static findAll(element, document) {
         if (typeof element !== "string") throw new InvalidArgumentTypeError("'element' must be an HTMLElement object!")
 
-        if (!(document instanceof Document)) throw new InvalidArgumentTypeError("'document' must be a Document object!")
+        if (typeof document !== "object") throw new InvalidArgumentTypeError("'document' must be a Document object!")
 
 
         const elements = document.querySelectorAll(element)

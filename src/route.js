@@ -1,6 +1,7 @@
 import Router from "./router.js"
 import View from "./view.js";
 import { InvalidArgumentTypeError } from "./exception.js"
+import RouteDTO from "./dto/route.js"
 
 
 /**
@@ -22,15 +23,7 @@ export default class Route extends Router {
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
 
 
-        this._routes[this._routePrefix + route] = {
-            title : "",
-            template: callback,
-            middlewares: [],
-            meta : {
-                params: {},
-                query: {},
-            }
-        };
+        this._routes[this._routePrefix + route] = new RouteDTO({ template : callback })
 
         this._currentRoute = route;
 
