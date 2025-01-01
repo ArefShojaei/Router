@@ -12,7 +12,7 @@ export default class Route {
 
 
     constructor({ title, template }) {
-        this.title = title
+        this.title = title ?? this.title
         this.template = template
     }
 }
