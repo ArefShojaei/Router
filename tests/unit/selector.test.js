@@ -3,7 +3,7 @@ import Selector from "../../src/utils/selector.js";
 
 
 describe("Selector tests", () => {
-    let document
+    let documentInstance
 
     beforeEach(() => {
         const { window : { document } } = new JSDOM(`
@@ -17,7 +17,7 @@ describe("Selector tests", () => {
             </html>
         `)
 
-        document = document
+        documentInstance = document
     })
 
 
@@ -26,14 +26,14 @@ describe("Selector tests", () => {
     });
 
     it("should get all anchor elements", () => {
-        const links = Selector.findAll("a", document).getElements();
+        const links = Selector.findAll("a", documentInstance)._getElements();
 
 
         expect(typeof links).toBe("object")
     });
 
     it("should get title of link", () => {
-        Selector.findAll("a", document).each(anchor => {
+        Selector.findAll("a", documentInstance).each(anchor => {
             const link = anchor.getAttribute("href")
 
             expect(typeof link).toBe("string")

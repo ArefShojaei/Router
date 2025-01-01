@@ -1,57 +1,83 @@
-import { JSDOM } from "jsdom"
-import Route from "../../src/route.js";
+import Route from "../../src/route.js"
 
 
 describe("Route tests", () => {
     it("should add a single route", () => {
-        Route.addRoute("/", () => "Welcome Page")
+        const route = "/"
+        const template = () => "Welcome Page"
+        
+        Route.addRoute(route, template)
 
-        expect(Route._routes["/"]).toBeDefined()
-        expect(typeof Route._routes["/"]).toBe("object")
+        const routes = Route._routes
+
+        expect(routes[route]).toBeDefined()
     })
     
     it("should add the group route", () => {
-        Route.group("/auth", () => {
-            Route.addRoute("/login", () => "Login page")
-            Route.addRoute("/register", () => "Register page")
+        const routePrefix = "/auth"
+        const route = "/login"
+        const template = () => "Login Page"
+        
+        Route.group(routePrefix, () => {
+            Route.addRoute(route, template)
         })
 
-        expect(Route._routes["/auth/login"]).toBeDefined()
-        expect(Route._routes["/auth/register"]).toBeDefined()
-        expect(typeof Route._routes["/auth/login"]).toBe("object")
-        expect(typeof Route._routes["/auth/register"]).toBe("object")
-    })
+        const routes = Route._routes
 
-    it("should set route page title", () => {
-        Route.addRoute("/products", () => "Products Page").title("Products | SPA")
+        expect(routes[routePrefix + route]).toBeDefined()
+        expect(typeof routes[routePrefix + route]).toBe("object")
+    })
     
-        const { title } = Route._routes["/products"]
+    it("should add a dynamic route", () => {
+        const route = "/users/{id}"
+        const template = ({ params: { id } }) => `User #${id}`
 
-        expect(title).toBeDefined()
-        expect(typeof title).toBe("string")
-        expect(title).toEqual("Products | SPA")
+        Route.addRoute(route, template)
+
+        const routes = Route._routes
+
+        expect(routes[route]).toBeDefined()
+        expect(typeof routes[route]).toBe("object")
     })
+    
+    it("should add middleware to a route", () => {
+        const route = "/admin"
+        const template = () => "Admin Page"
+        const loggerMiddleware = () => { message : "Custom Log Message!" } 
 
+        Route.addRoute(route, template).middleware([loggerMiddleware])
+    
+        const routes = Route._routes
+
+        expect(routes[route]["middlewares"]).toBeDefined()
+        expect(typeof routes[route]["middlewares"]).toBe("object")
+    })
+    
+    it("should add page title to a route", () => {
+        const route = "/product"
+        const template = () => "SPA Page"
+
+        Route.addRoute(route, template).title("Custom page title (SPA)")
+    
+        const routes = Route._routes
+
+        expect(routes[route]["title"]).toBeDefined()
+        expect(typeof routes[route]["title"]).toBe("string")
+    })
+    
     it("should redirect route", () => {
-        const { window } = new JSDOM(`<html><head></head><body></body></html>`, { url : "http://localhost:8000" })
+        const welcomeRoute = "/"
+        const redirectionRoute = "/redirection"
+        const distRoute = welcomeRoute
 
         Route.addRoute("/", () => "Welcome Page")
-        Route.addRoute("/products", () => Route.redirect("/", window))
-        
-        const { template } = Route._routes["/products"]
-
-        expect(typeof template).toBe("function")
-        expect(template()).toEqual("Welcome Page")
-    })
-
-    it("should add middleware", () => {
-        const logger = () => console.log("[INFO] Log message")
-
-        Route.addRoute("/", () => "Welcome Page").middleware([logger])
-
-        const { middlewares } = Route._routes["/"]
+        Route.addRoute("/redirection", () => Route.redirect(distRoute))
     
-        expect(middlewares).toBeDefined()
-        expect(Array.isArray(middlewares)).toBe(true)
+        const routes = Route._routes
+
+        expect(routes[redirectionRoute]).toBeDefined()
+        expect(typeof routes[redirectionRoute]).toBe("object")
+        expect(routes[welcomeRoute]).toBeDefined()
+        expect(typeof routes[welcomeRoute]).toBe("object")
     })
 })

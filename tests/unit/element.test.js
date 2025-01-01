@@ -3,19 +3,21 @@ import Element from "../../src/utils/element"
 
 
 describe("Element tests", () => {
-    let DOM
+    let documentInstance
 
     beforeEach(() => {
         const { window : { document } } = new JSDOM(`
             <html>
-                <head></head>
+                <head>
+                    <title>SPA Page</title>
+                </head>
                 <body>
                     <a href='/'>Home page</a>
                 </body>
             </html>
         `)
 
-        DOM = document
+        documentInstance = document
     })
 
 
@@ -24,11 +26,8 @@ describe("Element tests", () => {
     })
 
     it("should fire click event", () => {
-        const links = DOM.querySelector("a")
+        const link = documentInstance.querySelector("a")
 
-        Element.onClick(links , (event) => {
-            
-            expect(typeof event).toBe("object")
-        }, { HTMLElement })
+        Element.onClick(link , (event) => expect(typeof event).toBe(Event))
     })
 })
