@@ -158,6 +158,8 @@ export default class Router {
     static #changeRoutebyLink() {
         Selector.findAll("a", this._document).each(anchor => {
             Element.onClick(anchor, (event) => {
+                if (event.target.hasAttribute("data-link")) return false
+
                 event.preventDefault()
 
                 const route = event.target.getAttribute("href")
