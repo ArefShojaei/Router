@@ -42,11 +42,15 @@ Router.run()
     </head>
     <body>
         <ul>
+            <!-- Redirect to local links -->
             <li><a href="/">Home</a></li>
             <li><a href="/auth/login">Login</a></li>
             <li><a href="/auth/register">Register</a></li>
             <li><a href="/users/2904152">Admin Page</a></li>
             <li><a href="/redirection">Redirect to a page</a></li>
+            
+            <!-- Redirect to external resources -->
+            <li><a href="https://github.com/ArefShojaei/Router" data-link>Github</a></li>
         </ul>
 
         <div id="root"></div>
