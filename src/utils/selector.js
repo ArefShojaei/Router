@@ -32,6 +32,7 @@ export default class Selector {
     /**
      * @param {function} callback
      * @returns {void}
+     * @returns {void}
      */
     static each(callback) {
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")
@@ -44,6 +45,7 @@ export default class Selector {
 
     /**
      * @param {array} elements 
+     * @returns {void}
      */
     static _setElements(elements) {
         this.#elements.push(...elements)

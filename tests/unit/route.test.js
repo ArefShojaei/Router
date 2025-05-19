@@ -6,7 +6,7 @@ describe("Route tests", () => {
         const route = "/"
         const template = () => "Welcome Page"
         
-        Route.addRoute(route, template)
+        Route.add(route, template)
 
         const routes = Route._routes
 
@@ -19,7 +19,7 @@ describe("Route tests", () => {
         const template = () => "Login Page"
         
         Route.group(routePrefix, () => {
-            Route.addRoute(route, template)
+            Route.add(route, template)
         })
 
         const routes = Route._routes
@@ -32,7 +32,7 @@ describe("Route tests", () => {
         const route = "/users/{id}"
         const template = ({ params: { id } }) => `User #${id}`
 
-        Route.addRoute(route, template)
+        Route.add(route, template)
 
         const routes = Route._routes
 
@@ -45,7 +45,7 @@ describe("Route tests", () => {
         const template = () => "Admin Page"
         const loggerMiddleware = () => { message : "Custom Log Message!" } 
 
-        Route.addRoute(route, template).middleware([loggerMiddleware])
+        Route.add(route, template).middleware([loggerMiddleware])
     
         const routes = Route._routes
 
@@ -57,7 +57,7 @@ describe("Route tests", () => {
         const route = "/product"
         const template = () => "SPA Page"
 
-        Route.addRoute(route, template).title("Custom page title (SPA)")
+        Route.add(route, template).title("Custom page title (SPA)")
     
         const routes = Route._routes
 
@@ -70,8 +70,8 @@ describe("Route tests", () => {
         const redirectionRoute = "/redirection"
         const distRoute = welcomeRoute
 
-        Route.addRoute("/", () => "Welcome Page")
-        Route.addRoute("/redirection", () => Route.redirect(distRoute))
+        Route.add("/", () => "Welcome Page")
+        Route.add("/redirection", () => Route.redirect(distRoute))
     
         const routes = Route._routes
 

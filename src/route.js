@@ -17,7 +17,7 @@ export default class Route extends Router {
      * @param {fucntion} callback 
      * @returns {Route}
      */   
-    static addRoute(route, callback) {
+    static add(route, callback) {
         if (typeof route !== "string") throw new InvalidArgumentTypeError("'route' must be a string!")
         
         if (typeof callback !== "function") throw new InvalidArgumentTypeError("'callback' must be a function!")

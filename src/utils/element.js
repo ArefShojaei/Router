@@ -11,6 +11,7 @@ export default class Element {
     /**
      * @param {HTMLElement} element 
      * @param {function} callback 
+     * @returns {void}
      */
     static onClick(element, callback) {
         if (typeof element !== "object") throw new InvalidArgumentTypeError("'element' must be an HTMLElement object!")

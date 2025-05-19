@@ -1,12 +1,12 @@
 {
   "name": "@aref-shojaei/router",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "JavaScript Router (SPA)",
   "main": "index.js",
   "directories": {
     "test": "tests",
     "src": "src",
-    "build" : "build",
+    "build": "build",
     "example": "example"
   },
   "scripts": {
