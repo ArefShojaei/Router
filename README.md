@@ -14,20 +14,20 @@ Router.configure({ window, document })
 
 
 // Single Route
-Route.addRoute("/", () => "Welcome Page")
+Route.add("/", () => "Welcome Page")
 
 // Group Routes
 Route.group("/auth", () => {
-    Route.addRoute("/login", () => "Login Page")
-    Route.addRoute("/register", () => "Register Page")
+    Route.add("/login", () => "Login Page")
+    Route.add("/register", () => "Register Page")
 })
 
 // Dynamic Route
-Route.addRoute("/users/{id}", ({ params : { name } }) => `User#${id} Page`)
+Route.add("/users/{id}", ({ params : { name } }) => `User#${id} Page`)
 
 
 // Redirect Routes
-Route.addRoute("/redirection", () => Route.redirect("/"))
+Route.add("/redirection", () => Route.redirect("/"))
 
 
 // Initialize the router
@@ -124,7 +124,7 @@ yarn add @aref-shojaei/router
 ```js
 import { Router , Route } from "@aref-shojaei/router"
 
-Route.addRoute("/", () => "Welcome Page")
+Route.add("/", () => "Welcome Page")
 
 Router.run()
 ```
@@ -143,18 +143,18 @@ Router.run()
 import { Route } from "@aref-shojaei/router"
 
 // Single route
-Route.addRoute("/", () => "Welcome Page")
+Route.add("/", () => "Welcome Page")
 
 // Group routes
 Route.group("/auth", () => {
-    Route.addRoute("/login", () => "Welcome Page")
-    Route.addRoute("/register", () => "Welcome Page")
+    Route.add("/login", () => "Welcome Page")
+    Route.add("/register", () => "Welcome Page")
 })
 
 // Dynamic route with params
-Route.addRoute("/users/{id}", ({ params : { id } }) => `User #{id} Page`)
+Route.add("/users/{id}", ({ params : { id } }) => `User #{id} Page`)
 
-Route.addRoute("/courses/{category}/{name}", ({ params : { category, name } }) => `Course Detail: '${category}/${name}'  Page`)
+Route.add("/courses/{category}/{name}", ({ params : { category, name } }) => `Course Detail: '${category}/${name}'  Page`)
 ```
 
 <br/>
@@ -172,12 +172,12 @@ const logger = () => console.log("[LOG] my custom middleware")
 
 
 // Single route with middleware
-Route.addRoute("/", () => "Welcome Page").middleware([logger])
+Route.add("/", () => "Welcome Page").middleware([logger])
 
 // Group routes with middleware
 Route.group("/auth", () => {
-    Route.addRoute("/login", () => "Welcome Page")
-    Route.addRoute("/register", () => "Welcome Page")
+    Route.add("/login", () => "Welcome Page")
+    Route.add("/register", () => "Welcome Page")
 }).middleware([logger])
 ```
 
@@ -188,8 +188,8 @@ Route.group("/auth", () => {
 ```js
 import { Route } from "@aref-shojaei/router"
 
-Route.addRoute("/auth/login", () => "Welcome Page")
-Route.addRoute("/dashboard", () => Route.redirect("/auth/login"))
+Route.add("/auth/login", () => "Welcome Page")
+Route.add("/dashboard", () => Route.redirect("/auth/login"))
 ```
 
 <br/>
@@ -201,5 +201,5 @@ Route.addRoute("/dashboard", () => Route.redirect("/auth/login"))
 ```js
 import { Route } from "@aref-shojaei/router"
 
-Route.addRoute("/", () => "Welcome Page").title("Custom Page Title | SPA")
+Route.add("/", () => "Welcome Page").title("Custom Page Title | SPA")
 ```
