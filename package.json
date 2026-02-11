@@ -1,7 +1,7 @@
 {
   "name": "@aref-shojaei/router",
-  "version": "1.0.2",
-  "description": "JavaScript Router (SPA)",
+  "version": "1.1.0",
+  "description": "JavaScript Routing for Front-end (SPA)",
   "main": "index.js",
   "directories": {
     "test": "tests",
